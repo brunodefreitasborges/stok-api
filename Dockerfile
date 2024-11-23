@@ -6,11 +6,11 @@ RUN apt-get update && \
     apt-get install -y openjdk-21-jdk wget curl gnupg software-properties-common unzip && \
     rm -rf /var/lib/apt/lists/*
 
-# Install Gradle 8.3
-RUN wget https://services.gradle.org/distributions/gradle-8.3-bin.zip -P /tmp && \
-    unzip /tmp/gradle-8.3-bin.zip -d /opt && \
-    ln -s /opt/gradle-8.3/bin/gradle /usr/local/bin/gradle && \
-    rm -rf /tmp/gradle-8.3-bin.zip
+# Install Gradle 8.5
+RUN wget https://services.gradle.org/distributions/gradle-8.5-bin.zip -P /tmp && \
+    unzip /tmp/gradle-8.5-bin.zip -d /opt && \
+    ln -s /opt/gradle-8.5/bin/gradle /usr/local/bin/gradle && \
+    rm -rf /tmp/gradle-8.5-bin.zip
 
 # Copy your application code
 COPY . /app
