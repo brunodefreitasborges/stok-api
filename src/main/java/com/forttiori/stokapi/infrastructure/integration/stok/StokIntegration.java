@@ -1,6 +1,6 @@
 package com.forttiori.stokapi.infrastructure.integration.stok;
 
-import com.forttiori.stokapi.domain.SectionsDTO;
+import com.forttiori.stokapi.domain.dto.SectionsDTO;
 import com.forttiori.stokapi.infrastructure.integration.stok.response.ProductIntegrationResponse;
 import com.forttiori.stokapi.infrastructure.integration.stok.response.SectionsIntegrationResponse;
 import lombok.RequiredArgsConstructor;

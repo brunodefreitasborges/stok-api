@@ -9,4 +9,6 @@ public interface CustomProductRepository {
     Mono<Void> createInsert(List<ProductEntity> products);
 
     Flux<ProductEntity> getAll(String date);
+
+    Flux<String> getAvailableDates();
 }

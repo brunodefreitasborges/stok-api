@@ -1,4 +1,4 @@
-package com.forttiori.stokapi.domain;
+package com.forttiori.stokapi.domain.dto;
 
 import lombok.Builder;
 

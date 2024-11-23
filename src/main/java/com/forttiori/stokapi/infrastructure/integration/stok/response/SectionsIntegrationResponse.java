@@ -1,7 +1,7 @@
 package com.forttiori.stokapi.infrastructure.integration.stok.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.forttiori.stokapi.domain.SectionsDTO;
+import com.forttiori.stokapi.domain.dto.SectionsDTO;
 
 import java.util.List;
 

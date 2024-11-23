@@ -21,24 +21,15 @@ public class ProductEntity {
 
     @Id
     private String id;
-
     private Integer sectionId;
-
-    @Indexed(unique = true)
+    @Indexed
     private String description;
-
     private String image;
-
     private Boolean available;
-
     private BigDecimal price;
-
     private String barcode;
-
     private String sku;
-
     private Boolean onSale;
-
     private Sale sale;
 
     @Builder
