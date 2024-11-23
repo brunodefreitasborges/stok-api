@@ -1,6 +1,5 @@
 package com.forttiori.stokapi.infrastructure.integration.stok;
 
-import com.forttiori.stokapi.domain.dto.SectionsDTO;
 import com.forttiori.stokapi.infrastructure.integration.stok.response.ProductIntegrationResponse;
 import com.forttiori.stokapi.infrastructure.integration.stok.response.SectionsIntegrationResponse;
 import lombok.RequiredArgsConstructor;
@@ -16,14 +15,13 @@ public class StokIntegration {
 
     private final WebClient webClient;
 
-    public Mono<SectionsDTO> getSections() {
+    public Mono<SectionsIntegrationResponse> getSections() {
         return webClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("departamentos/arvore/filial/1/centro_distribuicao/3")
                         .build())
                 .retrieve()
-                .bodyToMono(SectionsIntegrationResponse.class)
-                .map(SectionsIntegrationResponse::toDomain);
+                .bodyToMono(SectionsIntegrationResponse.class);
     }
 
     public Mono<ProductIntegrationResponse> getProductsBySection(Integer sectionId, Integer page) {

@@ -1,7 +1,8 @@
-package com.forttiori.stokapi.contract.response;
+package com.forttiori.stokapi.contract.product.response;
 
 import com.forttiori.stokapi.infrastructure.repository.product.ProductEntity;
 import lombok.Builder;
+import org.springframework.data.domain.Page;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -11,7 +12,11 @@ import java.util.Optional;
 @Builder
 public record ProductResponse(
         LocalDate date,
-        List<Product> products
+        List<Product> products,
+         Integer totalPages,
+         Integer totalElements,
+         Integer page,
+         Integer size
 ) {
     @Builder
     public record Product(
@@ -54,10 +59,14 @@ public record ProductResponse(
         }
 
     }
-    public static ProductResponse fromDomain(List<ProductEntity> entities, LocalDate date) {
+    public static ProductResponse fromDomain(Page<ProductEntity> page, LocalDate date) {
         return ProductResponse.builder()
                 .date(date)
-                .products(entities.stream().map(Product::fromDomain).toList())
+                .products(page.getContent().stream().map(Product::fromDomain).toList())
+                .size(page.getSize())
+                .page(page.getNumber())
+                .totalPages(page.getTotalPages())
+                .totalElements((int) page.getTotalElements())
                 .build();
     }
 }

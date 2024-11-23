@@ -1,4 +1,4 @@
-package com.forttiori.stokapi.contract.response;
+package com.forttiori.stokapi.contract.product.response;
 
 import lombok.Builder;
 
