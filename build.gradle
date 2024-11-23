@@ -33,7 +33,3 @@ dependencies {
     testImplementation 'io.projectreactor:reactor-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
-
-tasks.named('test') {
-    useJUnitPlatform()
-}
