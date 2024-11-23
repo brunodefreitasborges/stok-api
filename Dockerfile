@@ -15,9 +15,13 @@ RUN wget https://services.gradle.org/distributions/gradle-8.3-bin.zip -P /tmp &&
 # Copy your application code
 COPY . /app
 
-# Build your application
+# Set working directory
 WORKDIR /app
-RUN gradle clean build -x test
+
+# Clear Gradle cache and build application
+RUN gradle --stop && \
+    rm -rf ~/.gradle/caches && \
+    gradle clean build -x test --refresh-dependencies
 
 # Final image to run the app
 FROM openjdk:21-jdk-slim
