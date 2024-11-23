@@ -3,13 +3,7 @@ FROM ubuntu:latest AS build
 
 # Install dependencies and required tools
 RUN apt-get update && \
-    apt-get install -y wget curl gnupg software-properties-common unzip && \
-    rm -rf /var/lib/apt/lists/*
-
-# Install OpenJDK 21
-RUN echo "deb https://adoptopenjdk.net/installers/ubuntu/deb/openssl1.1/ /" > /etc/apt/sources.list.d/adoptopenjdk.list && \
-    apt-get update && \
-    apt-get install -y openjdk-21-jdk && \
+    apt-get install -y openjdk-21-jdk wget curl gnupg software-properties-common unzip && \
     rm -rf /var/lib/apt/lists/*
 
 # Install Gradle 7.6
