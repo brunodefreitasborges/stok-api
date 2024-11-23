@@ -1,37 +1,37 @@
-# Build stage
+# Start with an Ubuntu base image
 FROM ubuntu:latest AS build
 
-# Install dependencies: OpenJDK 21 and Gradle
+# Install dependencies and required tools
 RUN apt-get update && \
-    apt-get install -y wget curl gnupg software-properties-common && \
-    # Install OpenJDK 21 from the official PPA (if not available, use another version or repository)
-    wget -qO- https://adoptopenjdk.net/installers/ubuntu/deb/openssl1.1/ | tee /etc/apt/sources.list.d/adoptopenjdk.list && \
+    apt-get install -y wget curl gnupg software-properties-common unzip && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install OpenJDK 21
+RUN echo "deb https://adoptopenjdk.net/installers/ubuntu/deb/openssl1.1/ /" > /etc/apt/sources.list.d/adoptopenjdk.list && \
     apt-get update && \
     apt-get install -y openjdk-21-jdk && \
-    # Install Gradle
-    wget https://services.gradle.org/distributions/gradle-7.6-bin.zip -P /tmp && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install Gradle 7.6
+RUN wget https://services.gradle.org/distributions/gradle-7.6-bin.zip -P /tmp && \
     unzip /tmp/gradle-7.6-bin.zip -d /opt && \
     ln -s /opt/gradle-7.6/bin/gradle /usr/local/bin/gradle && \
-    # Clean up
-    rm -rf /var/lib/apt/lists/* /tmp/gradle-7.6-bin.zip
+    rm -rf /tmp/gradle-7.6-bin.zip
 
-# Set working directory
+# Copy your application code
+COPY . /app
+
+# Build your application
 WORKDIR /app
+RUN gradle clean build -x test
 
-# Copy source code into the container
-COPY . .
-
-# Build the application with stacktrace for better error logs
-RUN gradle clean build -x test --stacktrace
-
-# Final image stage
+# Final image to run the app
 FROM openjdk:21-jdk-slim
 
-# Expose the application port
 EXPOSE 8080
 
-# Copy the built jar from the build stage
-COPY --from=build /app/build/libs/stokapi-0.0.1-SNAPSHOT.jar /app.jar
+# Copy the JAR file from the build stage
+COPY --from=build /app/build/libs/stokapi-0.0.1-SNAPSHOT.jar app.jar
 
-# Set the entry point for the container
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+# Entry point to run the application
+ENTRYPOINT ["java", "-jar", "app.jar"]
